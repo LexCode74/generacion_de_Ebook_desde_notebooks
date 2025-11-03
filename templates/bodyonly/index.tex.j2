@@ -1,0 +1,4 @@
+{% extends 'article.tex.j2' %}
+{% block docclass %}{% endblock docclass %}
+{% block maketitle %}{% endblock maketitle %}
+{% block document %}{% block body %}{{ super() }}{% endblock body %}{% endblock document %}

@@ -1,0 +1,183 @@
+% --- Preámbulo compartido ---
+% OJO: babel se carga en master.tex con [spanish,es-noshorthands]
+
+% Matemáticas
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}      % mejoras sobre amsmath
+\usepackage{bm}             % \bm para negritas en matemáticas
+\usepackage{cases}          % entorno numcases
+
+% Gráficos y color
+\usepackage{graphicx,xcolor}
+
+% Página
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+% Profundidad de numeración y de índice
+% 0=part, 1=chapter, 2=section, 3=subsection, 4=subsubsection
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% Numeración de ecuaciones por capítulo
+\numberwithin{equation}{chapter}
+
+% Tipografía de párrafo (más tolerante)
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+\setlength\emergencystretch{3em}
+\sloppy
+
+% --- Captions y tipo 'none' para longtable ---
+\usepackage{caption}
+\usepackage{ltcaption} % longtable + caption
+
+% Declaramos un tipo de caption 'none' (sin etiqueta ni contador)
+\DeclareCaptionType{none}[][]
+\captionsetup[none]{labelformat=empty,labelsep=none}
+
+% Código fuente (listings; sin minted)
+\usepackage{listings}
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red!70!black},
+  frame=single,
+  breaklines=true,
+  upquote=true,
+  showstringspaces=false,
+  columns=fullflexible
+}
+
+% (Opcional) acentos correctos en listings:
+% \lstset{
+%   literate=
+%     {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+%     {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+%     {ñ}{{\~n}}1 {Ñ}{{\~N}}1
+% }
+
+% --- Tipografía monoespaciada con buen soporte Unicode ---
+\setmonofont[Scale=MatchLowercase]{DejaVu Sans Mono}
+
+% Entornos / teoremas
+\newtheorem{definicion}{Definición}[chapter]
+\newenvironment{ejercicio}{\par\medskip\noindent\textbf{Ejercicio.}}{\par\medskip}
+
+% Atajos
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+% --- Ajustes de títulos (evita saltos de nivel y mejora cabeceras) ---
+\usepackage{titlesec}
+% Estilo del capítulo (texto grande, con "Capítulo N.")
+\titleformat{\chapter}[display]
+  {\bfseries\LARGE}
+  {\chaptername\ \thechapter.}{1ex}{}
+\titlespacing*{\chapter}{0pt}{-0.5ex}{2.5ex}
+
+% Asegurar numeración y consistencia de niveles para Hyperref
+\usepackage{bookmark} % mejora marcadores PDF
+% Si alguna celda hubiese generado \section* accidentalmente y luego \subsection,
+% Hyperref se queja. Titlesec ya ayuda, pero podemos reiniciar contadores al subir nivel:
+\usepackage{etoolbox}
+\pretocmd{\section}{\setcounter{subsection}{0}\setcounter{subsubsection}{0}}{}{}
+\pretocmd{\subsection}{\setcounter{subsubsection}{0}}{}{}
+
+% ==== IMÁGENES (persistente: vive en estilo.tex) ====
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{float} % por si usamos [H] en figuras
+\DeclareGraphicsExtensions{.pdf,.png,.jpg,.jpeg}
+
+% Búsqueda de imágenes: rutas vistas desde build/
+\makeatletter
+\newcommand*\addpicpath{%
+  \graphicspath{{./}{./capitulo6_files/}{./capitulo7_files/}{./capitulo8_files/}{./capitulo9_files/}{./apendice_files/}{../notebooks/}}%
+}
+% Llamamos siempre que empiece el documento
+\AtBeginDocument{\addpicpath}
+\makeatother
+
+% Escala por defecto (si no se indica width en cada imagen)
+\setkeys{Gin}{keepaspectratio,width=\linewidth}
+
+% Atajos para usar desde Markdown:
+% \img[width=.4\textwidth]{archivo.png}
+\newcommand{\img}[2][]{\begin{center}\includegraphics[#1]{#2}\end{center}}
+
+% \Fig{archivo.png}{.4\textwidth}{Título de la figura}
+\newcommand{\Fig}[3]{%
+\begin{figure}[H]\centering
+\includegraphics[width=#2]{#1}
+\caption{#3}
+\end{figure}}
+% ==== FIN IMÁGENES ====
+% ==== Portada y licencia (persistentes desde estilo.tex) ====
+\usepackage{hyperref}
+\urlstyle{same}
+\usepackage{xstring} % para limpiar "Autor " si viene en \author
+
+% Pie de página global (si ya lo tienes configurado, deja lo tuyo)
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\small Copyright EDS e IA 2025.}
+\fancyfoot[R]{\small \url{ecuaciondiferencialejerciciosresueltos.com}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Edición (cámbiala aquí si deseas otra leyenda)
+\newcommand{\bookedition}{PRIMERA EDICIÓN}
+
+% No mostrar fecha nunca en la portada
+\makeatletter
+\renewcommand{\@date}{} % vacía por si master pone \date{\today}
+
+% \maketitle personalizado:
+\renewcommand{\maketitle}{%
+  \begingroup
+    \thispagestyle{fancy} % pie también en portada
+    \begin{titlepage}
+      \centering
+      % Título en negritas (grande)
+      {\bfseries\LARGE \@title\par}
+      \vspace{1.8cm}
+      % Rotulo "Autor" en una línea y el nombre DEBAJO en negritas
+      {\Large \textbf{Autor}\par}
+      \vspace{0.6cm}
+      % Limpiar si master trae "Autor <nombre>"
+      \def\AuthorClean{\@author}%
+      \IfBeginWith{\AuthorClean}{Autor }{%
+        \StrBehind{\AuthorClean}{Autor }[\AuthorClean]%
+      }{}%
+      {\Large \textbf{\AuthorClean}\par}
+      \vspace{1.2cm}
+      % Edición debajo del nombre
+      {\large \bookedition\par}
+      \vfill
+    \end{titlepage}
+  \endgroup
+  % Página siguiente: Licencia Creative Commons
+  \clearpage
+  \thispagestyle{fancy}
+  \null\vfill
+  \begin{center}
+    {\small
+      Este material se distribuye bajo la licencia\\[0.3em]
+      \textbf{Creative Commons Atribución-NoComercial-SinDerivadas 4.0 Internacional}\\[0.6em]
+      \href{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en}{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en}
+    }
+  \end{center}
+  \vfill\null
+  \clearpage
+}
+\makeatother
+% ==== FIN portada y licencia ====
+
+
+

@@ -1,0 +1,19 @@
+{
+  "libro": {
+    "titulo": "Ecuaciones Diferenciales con SageMath y Python: Aplicaciones Prácticas",
+    "autor": "Autor Manuel Alejandro Vivas Riverol",
+    "capitulos": [
+      "capitulo1.ipynb",
+      "gracias.ipynb"
+    ],
+  "titulos_capitulos": [
+    "Introducción a las Ecuaciones Diferenciales",
+    "gracias"
+  ],
+    "formato": "pdf",
+    "salida": "ebook.pdf",
+    "plantilla_nbconvert": "templates/bodyonly",
+    "ejecutar": true,
+    "ocultar_tags": ["hide_input", "hide_output"]
+  }
+}

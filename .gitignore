@@ -1,0 +1,47 @@
+# =========================
+# Proyecto eBook (nbconvert + LaTeX)
+# =========================
+
+# --- Carpeta de build (ignorar TODO excepto el marcador) ---
+build/
+!build/.gitkeep
+
+# --- Artefactos de distribución ---
+# Mantén la carpeta, sube solo el PDF final (p.ej. ebook.pdf)
+dist/*
+!dist/.gitkeep
+!dist/ebook.pdf
+
+# --- Checkpoints de Jupyter ---
+.ipynb_checkpoints/
+
+# --- Archivos temporales de LaTeX (en cualquier carpeta) ---
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.xdv
+*.synctex.gz
+*.lof
+*.lot
+*.bbl
+*.blg
+
+# --- Archivos temporales comunes ---
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# --- Entornos virtuales / Python cache ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- Archivos del sistema ---
+.DS_Store
+Thumbs.db
