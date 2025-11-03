@@ -1,4 +1,4 @@
-# Ebook EDs con SAGE/Python — HUB
+# Generación de Ebook desde notebooks
 Este repositorio contiene la fuente del eBook (notebooks) y el “pegamento” para
 convertirlos a LaTeX/PDF mediante `nbconvert` + XeLaTeX y una plantilla mínima.
 
